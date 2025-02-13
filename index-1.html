@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti 💖</title>
+    <style>
+        /* Estilos generales */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #ffdde1; overflow: hidden; position: relative; }
+        .container { width: 80%; max-width: 500px; text-align: center; position: relative; z-index: 2; }
+        .slide { display: none; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); }
+        .active { display: block; animation: fadeIn 1s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        button { margin-top: 20px; padding: 10px 20px; background: #ff758c; border: none; border-radius: 10px; color: white; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #ff5f7e; }
+        
+        /* Animación de fondo con corazones flotantes */
+        .background-animate { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; }
+        .background-animate span { position: absolute; width: 10px; height: 10px; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: float 10s infinite linear; }
+        @keyframes float { 
+            from { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            to { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+        
+        /* Estilo del collage de fotos en forma de corazón */
+        .heart-container { position: relative; width: 300px; height: 300px; }
+        .heart-container img { position: absolute; width: 80px; height: 80px; object-fit: cover; border: 5px solid white; border-radius: 10px; box-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+        .heart-container img:nth-child(1) { top: 40px; left: 110px; }
+        .heart-container img:nth-child(2) { top: 70px; left: 60px; }
+        .heart-container img:nth-child(3) { top: 70px; left: 160px; }
+        .heart-container img:nth-child(4) { top: 120px; left: 30px; }
+        .heart-container img:nth-child(5) { top: 120px; left: 190px; }
+        .heart-container img:nth-child(6) { top: 180px; left: 80px; }
+        .heart-container img:nth-child(7) { top: 180px; left: 140px; }
+
+        /* Texto flotante "Te Amo" */
+        .love-text { 
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            font-size: 2em; 
+            color: red; 
+            font-weight: bold; 
+            animation: heartbeat 1s infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animate"></div>
+    <div class="container">
+        <td height="380" colspan="3" valign="middle" class="bb">
+            <audio src="musica.mp3" autoplay></audio>
+          </td>
+          <audio loop>
+            <source src="musica.mp3" autoplay type="audio/mp3">
+        </audio>
+
+        <div class="slide active">
+            <h2>Hola mi amor 💕</h2>
+            <img src="imagen1.jpg" alt="Imagen especial" width="100%">
+            <p>Quería hacer algo especial para ti.</p>
+            <button onclick="nextSlide()">Siguiente</button>
+        </div>
+        <div class="slide">
+            <h2>Eres increíble 😍</h2>
+            <img src="imagen2.jpg" alt="Imagen especial" width="100%">
+            <p>Todos los días me haces muy feliz.</p>
+            <button onclick="nextSlide()">Siguiente</button>
+        </div>
+        <div class="slide">
+            <h2>Gracias por estar a mi lado 💖</h2>
+            <img src="imagen3.jpg" alt="Imagen especial" width="100%">
+            <p>No cambiaría nada de ti, eres perfecta.</p>
+            <button onclick="nextSlide()">Siguiente</button>
+        </div>
+        <div class="slide">
+            <h2>Un regalo especial para ti 💝</h2>
+            <button onclick="location.href='prueba.html'">Ver sorpresa</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const background = document.querySelector('.background-animate');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        
+        function createFloatingElements() {
+            for (let i = 0; i < 30; i++) {
+                let star = document.createElement("span");
+                let size = Math.random() * 10 + 5;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                background.appendChild(star);
+            }
+        }
+        createFloatingElements();
+    </script>
+</body>
+</html>
