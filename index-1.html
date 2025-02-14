@@ -50,21 +50,17 @@
             50% { transform: translate(-50%, -50%) scale(1.2); }
             100% { transform: translate(-50%, -50%) scale(1); }
         }
+
+
     </style>
 </head>
 <body>
     <div class="background-animate"></div>
     <div class="container">
         <td height="380" colspan="3" valign="middle" class="bb">
-            <audio src="musica.mp3" autoplay></audio>
-          </td>
-          <audio loop>
-            <source src="musica.mp3" autoplay type="audio/mp3">
-        </audio>
-
         <div class="slide active">
             <h2>Hola mi amor 💕</h2>
-            <img src="imagen1.jpg" alt="Imagen especial" width="100%">
+            <img src="https://i.pinimg.com/originals/49/84/ce/4984ce4f416747e312d01273d8756657.gif" alt="Imagen especial" width="100%">
             <p>Quería hacer algo especial para ti.</p>
 			<!-- 🎵 Botón para reproducir la música -->
         <button id="playMusic">🎵 Reproducir Música</button>
@@ -77,13 +73,13 @@
         </div>
         <div class="slide">
             <h2>Eres increíble 😍</h2>
-            <img src="imagen2.jpg" alt="Imagen especial" width="100%">
+            <img src="https://i.pinimg.com/originals/be/0c/22/be0c22e0af951aa7fa8753381663eb2c.gif" alt="Imagen especial" width="100%">
             <p>Todos los días me haces muy feliz.</p>
             <button onclick="nextSlide()">Siguiente</button>
         </div>
         <div class="slide">
             <h2>Gracias por estar a mi lado 💖</h2>
-            <img src="imagen3.jpg" alt="Imagen especial" width="100%">
+            <img src="https://i.pinimg.com/originals/a0/ba/95/a0ba951828efe9613d64db6e5b4f33e7.gif" alt="Imagen especial" width="100%">
             <p>No cambiaría nada de ti, eres perfecta.</p>
             <button onclick="nextSlide()">Siguiente</button>
         </div>
@@ -116,19 +112,45 @@
             }
         }
         createFloatingElements();
-		// 🎵 Función para reproducir la música con un clic
-        document.getElementById("playMusic").addEventListener("click", function() {
-            let music = document.getElementById("bgMusic");
-            
+		 // 🎵 Función para reproducir la música con un clic
+         let music = document.getElementById("bgMusic");
+        let playButton = document.getElementById("playMusic");
+
+        // Comprobamos si la música está guardada en localStorage como "true" o "false"
+        let musicPlaying = localStorage.getItem("musicPlaying") === "true";
+
+        // Si estaba sonando anteriormente, la reanudamos desde el último punto
+        if (musicPlaying) {
+            let savedTime = localStorage.getItem("musicTime");
+            if (savedTime) {
+                music.currentTime = savedTime; // Reproducir desde la posición guardada
+            }
+            music.play().catch(error => console.log("Autoplay bloqueado"));
+            playButton.textContent = "⏸️ Pausar Música";
+        } else {
+            music.currentTime = 0; // Asegura que la música comienza desde 0
+        }
+
+        // Evento para manejar el botón de música
+        playButton.addEventListener("click", function() {
             if (music.paused) {
                 music.play();
-                this.textContent = "⏸️ Pausar Música";
+                localStorage.setItem("musicPlaying", "true");  // Guardar estado
+                playButton.textContent = "⏸️ Pausar Música";
             } else {
                 music.pause();
-                this.textContent = "🎵 Reproducir Música";
+                localStorage.setItem("musicPlaying", "false"); // Guardar estado
+                playButton.textContent = "🎵 Reproducir Música";
             }
         });
+
+        // Guardar la posición de la música antes de salir
+        window.addEventListener("beforeunload", function() {
+            localStorage.setItem("musicTime", music.currentTime);
+        });
+        
     </script>
+    
 
 </body>
 </html>
